@@ -2,3 +2,8 @@ body, #root, #root > .grid {
     height: 100%;
     background: #121212
 }
+
+#root > .masthead {
+    min-height: 60vh;
+    background: #1d1d1d;
+}
