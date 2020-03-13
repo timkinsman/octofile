@@ -16,16 +16,17 @@ const OctoShow = () => {
         })
     }, [])
 
-    console.log(data)
-
     if(data){
         return (
-            <OctoMenu data={data} />
+            <>
+                <OctoMenu data={data} />
+                <OctoMain data={data} />
+            </>
         )
     }
 
     return (
-        <div>loading</div>
+        <div className="ui active centered inline loader"></div>
     )
 }
 
