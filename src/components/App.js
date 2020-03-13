@@ -1,10 +1,10 @@
 import React from 'react';
 import OctoSearch from './OctoSearch';
-import OctoDisplay from './OctoDisplay';
+import OctoShow from './OctoShow';
 
 const App = () => {
     return (
-        <OctoDisplay />
+        <OctoShow />
     )
 }
 
