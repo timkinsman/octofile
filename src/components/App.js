@@ -13,7 +13,7 @@ const App = () => {
         return <OctoShow term={term} />
     }
 
-    return <OctoSearch />
+    return <OctoSearch msg="Hi!" />
 }
 
 export default App;

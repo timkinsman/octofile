@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react'
 import OctoInfo from './OctoInfo'
 import OctoRepos from './OctoRepos'
+import OctoSearch from './OctoSearch';
 
 const OctoShow = ({term}) => {
     const [info, setInfo] = useState();
     const [repos, setRepos] = useState();
+    const [err, setErr] = useState(false);
 
     var github = require('octonode');
     var client = github.client();
@@ -13,7 +15,7 @@ const OctoShow = ({term}) => {
         var ghsearch = client.search();
         ghsearch.users({q: term}, function(err, data, headers) {
             if(data.total_count === 0){
-
+                setErr(true);
             }else{
                 var ghuser = client.user(data.items[0].login);
                 ghuser.info(function(err, data, headers) {    
@@ -26,6 +28,14 @@ const OctoShow = ({term}) => {
         })
     }, [])
 
+    if(err){
+        console.log("AND WARNING")
+        return (
+            <>
+                <OctoSearch msg="Oh no! Something went wrong. Try again!" />
+            </>
+        )
+    }
 
     if(info && repos){
         return (
