@@ -1,32 +1,35 @@
 import React, {useEffect, useState} from 'react'
-import OctoMenu from './OctoMenu'
-import OctoMain from './OctoMain'
+import OctoInfo from './OctoInfo'
+import OctoRepos from './OctoRepos'
 
 const OctoShow = () => {
-    const [data, setData] = useState();
+    const [info, setInfo] = useState();
+    const [repos, setRepos] = useState();
 
     var github = require('octonode');
     var client = github.client();
 
     useEffect(() => {
         var ghuser = client.user('timkinsman');
-            ghuser.info(function(err, data, headers) {
-            
-            setData(data)
+        ghuser.info(function(err, data, headers) {    
+            setInfo(data)
+        })
+        ghuser.repos(function(err, data, headers) {
+            setRepos(data)
         })
     }, [])
 
-    if(data){
+    if(info && repos){
         return (
             <>
-                <OctoMenu data={data} />
-                <OctoMain data={data} />
+                <OctoInfo info={info} />
+                <OctoRepos repos={repos} />
             </>
         )
     }
 
     return (
-        <div className="ui active centered inline loader"></div>
+        <div class="ui active inverted huge text loader">Loading</div>
     )
 }
 
