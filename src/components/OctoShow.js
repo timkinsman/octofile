@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import OctoInfo from './OctoInfo'
 import OctoRepos from './OctoRepos'
 
-const OctoShow = () => {
+const OctoShow = ({term}) => {
     const [info, setInfo] = useState();
     const [repos, setRepos] = useState();
 
@@ -10,26 +10,44 @@ const OctoShow = () => {
     var client = github.client();
 
     useEffect(() => {
-        var ghuser = client.user('timkinsman');
-        ghuser.info(function(err, data, headers) {    
-            setInfo(data)
-        })
-        ghuser.repos(function(err, data, headers) {
-            setRepos(data)
+        var ghsearch = client.search();
+        ghsearch.users({q: term}, function(err, data, headers) {
+            if(data.total_count === 0){
+
+            }else{
+                var ghuser = client.user(data.items[0].login);
+                ghuser.info(function(err, data, headers) {    
+                    setInfo(data)
+                })
+                ghuser.repos(function(err, data, headers) {
+                    setRepos(data)
+                })
+            }
         })
     }, [])
+
 
     if(info && repos){
         return (
             <>
                 <OctoInfo info={info} />
                 <OctoRepos repos={repos} />
+                <div style={{background: 'white'}}>
+                    <div className="ui center aligned container">
+                        <div className="ui horizontal small link list" style={{padding: '25px 0'}}>
+                            <a className="item" href="https://reactjs.org/" target="_blank">React</a>
+                            <a className="item" href="https://semantic-ui.com/" target="_blank">Semantic UI</a>
+                            <a className="item" href="https://github.com/pksunkara/octonode" target="_blank">Octonode</a>
+                            <a className="item" href="https://github.com/primer/octicons/" target="_blank">Octicons</a>
+                        </div>
+                    </div>
+                </div>
             </>
         )
     }
 
     return (
-        <div class="ui active inverted huge text loader">Loading</div>
+        <div className="ui active inverted huge text loader">Loading</div>
     )
 }
 
