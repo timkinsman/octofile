@@ -1,10 +1,10 @@
 import React from 'react';
 
-const OctoInfo = ({info}) => {
+const OctoInfo = ({info, onClick}) => {
     console.log("info", info)
     return (
         <div>
-            <div className="ui borderless icon secondary fluid menu" style={{background: '#121212'}}>
+            <div className="ui borderless icon secondary fluid menu" onClick={onClick} style={{background: '#121212'}}>
                     <a className="item">
                         <i className="arrow alternate circle left outline large icon" style={{color: '#bb86fc'}}></i>
                     </a>

@@ -3,7 +3,7 @@ import OctoInfo from './OctoInfo'
 import OctoRepos from './OctoRepos'
 import OctoSearch from './OctoSearch';
 
-const OctoShow = ({term}) => {
+const OctoShow = ({term, onClick}) => {
     const [info, setInfo] = useState();
     const [repos, setRepos] = useState();
     const [err, setErr] = useState(false);
@@ -40,7 +40,7 @@ const OctoShow = ({term}) => {
     if(info && repos){
         return (
             <>
-                <OctoInfo info={info} />
+                <OctoInfo info={info} onClick={onClick} />
                 <OctoRepos repos={repos} />
                 <div style={{background: 'white'}}>
                     <div className="ui center aligned container">

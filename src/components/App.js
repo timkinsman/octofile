@@ -6,11 +6,11 @@ const App = () => {
     const [term, setTerm] = useState()
 
     useEffect(() => {
-        setTerm('timkinsman')
+        setTerm('jmperez')
     },[])
 
     if(term){
-        return <OctoShow term={term} />
+        return <OctoShow term={term} onClick={(() => setTerm(null))} />
     }
 
     return <OctoSearch msg="Hi!" />
