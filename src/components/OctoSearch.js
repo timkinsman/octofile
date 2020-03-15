@@ -1,20 +1,31 @@
-import React from 'react';
+import React, {useState} from 'react';
 
-const OctoSearch = ({msg}) => {
+const OctoSearch = ({msg, onSearchSubmit}) => {
+    const [term, setTerm] = useState()
+
+    const onSubmit = e => {
+        e.preventDefault();
+        onSearchSubmit(term);
+    }
+
     return (
-        <div className="ui middle aligned center aligned grid">
-            <div className="column" style={{margin: '-60px 0 0 0'}}>
-                <img src={require('../assets/images/github.svg')} className="ui centered small image" alt="logo" />
-                <h1 className="ui grey inverted header">{msg}</h1>
-                <div className="ui inverted transparent icon massive input">
-                    <input 
-                        type="text"
-                        placeholder="GitHub username..."
-                    />
-                    <i className="search icon"></i>
+            <div style={{background: '#121212', height:'100vh'}}>
+                <div style={{textAlign: 'center', padding: '20vh 0 0 0'}}>
+                    <img src={require('../assets/images/github.svg')} className="ui centered small image" alt="logo" />
+                    <h1 className="ui grey inverted header">{msg}</h1>
+                    <form onSubmit={onSubmit}>
+                        <div className="ui inverted transparent icon massive input">
+                            <input 
+                                type="text"
+                                placeholder="GitHub username..."
+                                onChange={e => setTerm(e.target.value)}
+                            />
+                            <i className="search icon"></i>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </div>
+        
     )
 }
 
