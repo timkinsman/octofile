@@ -9,10 +9,10 @@ const OctoSearch = ({msg, onSearchSubmit}) => {
     }
 
     return (
-            <div style={{background: '#121212', height:'100vh'}}>
-                <div style={{textAlign: 'center', padding: '20vh 0 0 0'}}>
+            <div style={{background: '#121212', height:'100vh', display: 'flex'}}>
+                <div style={{textAlign: 'center', alignSelf: 'center', flex: 'auto'}}>
                     <img src={require('../assets/images/github.svg')} className="ui centered small image" alt="logo" />
-                    <h1 className="ui grey inverted header">{msg}</h1>
+                    <h1 className="ui grey inverted header" style={{margin: '14px 0'}}>{msg}</h1>
                     <form onSubmit={onSubmit}>
                         <div className="ui inverted transparent icon massive input">
                             <input 

@@ -1,25 +1,45 @@
 import React from 'react';
 import Octicon, {Repo, PrimitiveDot, Star} from '@primer/octicons-react'
 import colors from './colors/colors.json'
-import {Doughnut} from 'react-chartjs-2'
+import {Doughnut, Bar} from 'react-chartjs-2'
+import _ from 'lodash'
 
 const OctoRepos = ({repos}) => {
+    console.log('repos', repos)
     repos.sort((a,b) => (a.stargazers_count < b.stargazers_count) ? 1 : ((b.stargazers_count < a.stargazers_count) ? -1 : 0))
     var res = {}
     repos.forEach(v => {res[v.language] = (res[v.language] || 0) + 1})
     const data = {
         datasets: [{
             data: Object.values(res),
-            backgroundColor: Object.keys(res).map(el => colors[el])
+            backgroundColor: Object.keys(res).map(el => colors[el]),
+            borderWidth: 0
         }],
         labels: Object.keys(res)
     }
-
+    var star = {}
+    repos.forEach(v => {star[v.language] = (star[v.language] || 0) + v.stargazers_count})
+    const star_data = {
+        datasets: [{
+            data: Object.values(star),
+            backgroundColor: Object.keys(star).map(el => colors[el]),
+            borderWidth: 0
+        }],
+        labels: Object.keys(star)
+    }
     return (
         <div style={{background: 'white', padding: '43px 0'}}>
         <div className="ui container">
-            <h2 className="ui dividing header" style={{textAlign: 'center'}}>Top Languages</h2>
-            <Doughnut data={data} />
+            <div className="ui two column stackable grid">
+                <div className="column">
+                    <h2 className="ui dividing header" style={{textAlign: 'center'}}>Top Languages</h2>
+                    <Doughnut data={data} options={{ legend: { position: 'left' }}} />
+                </div>
+                <div className="column">
+                    <h2 className="ui dividing header" style={{textAlign: 'center'}}>Stars/Languages</h2>
+                    <Bar data={star_data} options={{ legend: { display: false }}} />
+                </div>
+            </div>
             <h2 className="ui dividing header" style={{textAlign: 'center', padding: '43px 0 3px 0'}}>Top Repositories</h2>
             <div className="ui stackable grid" style={{height: 'auto'}}>
                 {repos.slice(0, 8).map(el =>
