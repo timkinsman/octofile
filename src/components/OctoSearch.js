@@ -20,7 +20,7 @@ const OctoSearch = ({msg, onSearchSubmit}) => {
                                 placeholder="GitHub username..."
                                 onChange={e => setTerm(e.target.value)}
                             />
-                            <i className="search icon"></i>
+                            <i className="search link icon" onClick={onSubmit}></i>
                         </div>
                     </form>
                 </div>
