@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import OctoInfo from './OctoInfo'
 import OctoRepos from './OctoRepos'
 import App from './App';
+import { controllers } from 'chart.js';
 
 const OctoShow = ({term, onClick}) => {
     const [info, setInfo] = useState();
@@ -12,20 +13,29 @@ const OctoShow = ({term, onClick}) => {
     var client = github.client();
 
     useEffect(() => {
-        var ghsearch = client.search();
-        ghsearch.users({q: term}, function(err, data, headers) {
-            if(data.total_count === 0){
+        async function fetchData() {
+            var ghsearch = client.search();
+            var result = await ghsearch.usersAsync({q: term})
+            if(result[0].total_count === 0){
                 setErr(true);
             }else{
-                var ghuser = client.user(data.items[0].login);
-                ghuser.info(function(err, data, headers) {    
-                    setInfo(data)
-                })
-                ghuser.repos({per_page: 100}, function(err, data, headers) {
-                    setRepos(data)
-                })
+                var ghuser = client.user(result[0].items[0].login);
+
+                result = await ghuser.infoAsync()
+                setInfo(result[0])
+
+                const pages = Math.ceil(result[0].public_repos / 100);
+                var repos = []
+
+                for(var i=0; i<pages; i++){
+                    result  = await ghuser.reposAsync({page: i + 1, per_page: 100})
+                    repos = [...repos, ...result[0]]
+                }
+
+                setRepos(repos)
             }
-        })
+        }
+        fetchData();
     }, [])
 
     if(err){
