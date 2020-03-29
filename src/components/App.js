@@ -10,7 +10,7 @@ const App = ({err}) => {
     }
 
     if(term){
-        return <OctoShow term={term} onClick={(() => setTerm(null))} />
+        return <OctoShow term={term} />
     }
 
     return <OctoSearch msg={err === undefined ? "Hi!" : err} onSearchSubmit={onSearchSubmit} />

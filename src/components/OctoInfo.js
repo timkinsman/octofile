@@ -1,12 +1,10 @@
 import React from 'react';
-import App from './App'
 
-const OctoInfo = ({info, onClick}) => {
-    console.log('info', info)
+const OctoInfo = ({info}) => {
     return (
         <div style={{background: '#121212', padding: '0 0 10px 0', boxShadow: "rgba(0, 0, 0, 0.5) 0px 0px 5px 0px"}}>
-            <div className="ui borderless icon secondary huge menu" onClick={onClick} style={{background: '#121212'}}>
-                    <a className="item" onClick={() => <App />}>
+            <div className="ui borderless icon secondary huge menu" style={{background: '#121212'}}>
+                    <a className="item" href="/">
                         <i className="arrow alternate circle left outline large icon" style={{color: '#bb86fc'}}></i>
                     </a>
                     <div className="right menu">

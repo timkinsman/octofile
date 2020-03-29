@@ -2,10 +2,8 @@ import React from 'react';
 import Octicon, {Repo, PrimitiveDot, Star} from '@primer/octicons-react'
 import colors from './colors/colors.json'
 import {Doughnut, Bar} from 'react-chartjs-2'
-import _ from 'lodash'
 
 const OctoRepos = ({repos}) => {
-    console.log('repos', repos)
     repos.sort((a,b) => (a.stargazers_count < b.stargazers_count) ? 1 : ((b.stargazers_count < a.stargazers_count) ? -1 : 0))
     var res = {}
     repos.forEach(v => {res[v.language] = (res[v.language] || 0) + 1})

@@ -2,18 +2,16 @@ import React, {useEffect, useState} from 'react'
 import OctoInfo from './OctoInfo'
 import OctoRepos from './OctoRepos'
 import App from './App';
-import { controllers } from 'chart.js';
 
-const OctoShow = ({term, onClick}) => {
+const OctoShow = ({term}) => {
     const [info, setInfo] = useState();
     const [repos, setRepos] = useState();
     const [err, setErr] = useState(false);
 
-    var github = require('octonode');
-    var client = github.client();
-
     useEffect(() => {
         async function fetchData() {
+            var github = require('octonode');
+            var client = github.client();
             var ghsearch = client.search();
             var result = await ghsearch.usersAsync({q: term})
             if(result[0].total_count === 0){
@@ -36,7 +34,7 @@ const OctoShow = ({term, onClick}) => {
             }
         }
         fetchData();
-    }, [])
+    }, [term])
 
     if(err){
         return <App err="User not found!" />
@@ -55,7 +53,7 @@ const OctoShow = ({term, onClick}) => {
         }
         return (
             <div>
-                <OctoInfo info={info} onClick={onClick} />
+                <OctoInfo info={info} />
                 {renderRepos()}
                 <div style={{background: 'white'}}>
                     <div className="ui center aligned container">
